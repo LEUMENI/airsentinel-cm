@@ -12,11 +12,11 @@ TEAM_MEMBERS = [
     
     {
         "name": "Christy Alotse",
-        "role": {"fr": "🔸Data Scientist || Certifiée Microsoft AI-900 : Intelligence Artificielle & Cloud Azure🔸Dans le Top 20 des 100 meilleurs étudiants camerounais - Edition 2025", "en": "🔸Data Scientist || Microsoft AI-900 Certified: Artificial Intelligence & Azure Cloud🔸In the Top 20 of the 100 Best Cameroonian Students - 2025 Edition"},
+        "role": {"fr": "🔸Data Scientist 🔸Dans le Top 20 des 100 meilleurs étudiants camerounais - Edition 2025", "en": "🔸Data Scientist 🔸In the Top 20 of the 100 Best Cameroonian Students - 2025 Edition"},
         "photo": "profile_christy.png",
         "linkedin": "https://www.linkedin.com/in/christy-alotse/",
-        "bio": {"fr": "Data Scientist experte en modélisation climatique et santé publique. Développement et validation du modèle de prédiction des vagues de chaleur (Régression Logistique).",
-                "en": "Expert Data Scientist in climate modeling and public health. Development and validation of the heatwave prediction model (Logistic Regression)."}
+        "bio": {"fr": "Responsable de l’orchestration du projet, de la supervision des équipes, et de la validation des modèles et de l’application.",
+                "en": "Responsible for project orchestration, team supervision, and validation of models and the application."}
     },
     {
         "name": "Danielle NKONHAWE",
@@ -28,7 +28,7 @@ TEAM_MEMBERS = [
     },
     {
         "name": "Belgrade YONYA",
-        "role": {"fr": "Data Scientist - Analyse et validation", "en": "Data Scientist - Analysis & Validation"},
+        "role": {"fr": "Data Scientist - modèle de vague de chaleur", "en": "Data Scientist - heat wave model"},
         "photo": "profile_belgrade.jpg",
         "linkedin": "https://www.linkedin.com/in/belgrade-yonya-29a1b9347/",
         "bio": {"fr": "Data Scientist spécialisé en analyse de données environnementales. Contribution à la validation des modèles et à l'analyse des données météorologiques camerounaises.",
