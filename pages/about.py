@@ -39,8 +39,8 @@ TEAM_MEMBERS = [
         "role": {"fr": "Consultant IA & Data |  Co-Founder of AI & Automation French Speaking Africa Community | Founder of LTECH", "en": "AI & Data Consultant | Co-Founder of AI & Automation French Speaking Africa Community | Founder of LTECH"},
         "photo": "profile_leumeni.jpg",
         "linkedin": "www.linkedin.com/in/lionel-leumeni-582630226",
-        "bio": {"fr": "Ingénieur logiciel spécialisé en développement web et applications data. Responsable de l'architecture et du développement complet de AirSentinel CM.",
-                "en": "Software engineer specialized in web development and data applications. Responsible for the architecture and full development of AirSentinel CM."}
+        "bio": {"fr": "Ingénieur logiciel. Responsable de l'architecture et du développement complet de AirSentinel CM.",
+                "en": "Software engineer. Responsible for the architecture and complete development of AirSentinel CM."}
     }
     
 ]
