@@ -20,6 +20,7 @@ from utils.thresholds import (
     HW_COLORS, is_danger_level,
 )
 from utils.database import create_alert, log_activity, get_admin_emails
+from utils.models import CITY_THRESHOLDS, get_risk_color
 
 
 def _mock_scores(seed=42):
@@ -151,7 +152,9 @@ def show_map():
         st.dataframe(styled, use_container_width=True, hide_index=True)
 
         # Graphique régions
-        region_df = df.groupby("Région")["Proxy PM2.5"].mean().round(1).reset_index()
+        region_col = "Région" if "Région" in df.columns else "region"
+        region_df = df.groupby(region_col)["Proxy PM2.5"].mean().round(1).reset_index()
+        region_df.columns = ["Région", "Proxy PM2.5"]
         colors_r = [get_aqi_color(get_aqi_level_from_score(v))
             for v in region_df["Proxy PM2.5"]]
         fig = go.Figure(go.Bar(
