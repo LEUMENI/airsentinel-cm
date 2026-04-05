@@ -24,7 +24,7 @@ def show_dashboard():
 
     st.markdown(f"""
     <div class='section-header'>
-        <h3>{'📊 Tableau de bord — AirSentinel CM' if lang=='fr' else '📊 Dashboard — AirSentinel CM'}</h3>
+        <h3>{'📊 Tableau de bord -AirSentinel CM' if lang=='fr' else '📊 Dashboard -AirSentinel CM'}</h3>
         <p>{'Vue d\'ensemble de la surveillance de la qualité de l\'air au Cameroun' if lang=='fr'
             else 'Overview of air quality monitoring in Cameroon'}</p>
     </div>
@@ -55,10 +55,10 @@ def show_dashboard():
     col_l, col_r = st.columns([3, 2])
 
     with col_l:
-        st.markdown(f"<div class='form-label-custom'>{'🗺️ Carte Proxy PM2.5 — Cameroun' if lang=='fr' else '🗺️ Proxy PM2.5 Map — Cameroon'}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='form-label-custom'>{'🗺️ Carte Proxy PM2.5 -Cameroun' if lang=='fr' else '🗺️ Proxy PM2.5 Map -Cameroon'}</div>", unsafe_allow_html=True)
         _show_aqi_map_plotly(dark, paper, text, sub, brd, lang)
         st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown(f"<div class='form-label-custom'>{'📈 Évolution Proxy PM2.5 — 30 derniers jours' if lang=='fr' else '📈 Proxy PM2.5 Evolution — Last 30 days'}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='form-label-custom'>{'📈 Évolution Proxy PM2.5 -30 derniers jours' if lang=='fr' else '📈 Proxy PM2.5 Evolution -Last 30 days'}</div>", unsafe_allow_html=True)
         _show_evolution(dark, paper, text, brd, lang)
 
     with col_r:
@@ -85,7 +85,7 @@ def show_dashboard():
                  "DANGER":"background-color:#B91C1C;color:white"}
             return c.get(val,"")
         if "Niveau" in df.columns:
-            st.dataframe(df.style.applymap(style_r, subset=["Niveau"]),
+            st.dataframe(df.style.map(style_r, subset=["Niveau"]),
                          use_container_width=True, hide_index=True)
         else:
             st.dataframe(df, use_container_width=True, hide_index=True)

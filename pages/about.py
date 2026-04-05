@@ -67,7 +67,7 @@ def show_about():
 
     st.markdown("""
     <div class='tricolor-bar'></div>
-    <h2 style='margin:0; font-weight:900;'>ℹ️ À propos — About AirSentinel CM</h2>
+    <h2 style='margin:0; font-weight:900;'>ℹ️ À propos -About AirSentinel CM</h2>
     """, unsafe_allow_html=True)
 
     # App presentation
@@ -113,8 +113,8 @@ def show_about():
             <b style='color:#1A4D8F; font-size:16px;'>🛠️ Stack Technique / Tech Stack</b><br><br>
             <table style='width:100%; font-size:13px; border-collapse:collapse;'>
                 <tr><td style='padding:4px 8px; color:#888;'>Backend</td><td style='padding:4px 8px;'>Python 3.11 + Streamlit</td></tr>
-                <tr><td style='padding:4px 8px; color:#888;'>ML — AQI</td><td style='padding:4px 8px;'>XGBoost (R²=0.86)</td></tr>
-                <tr><td style='padding:4px 8px; color:#888;'>ML — Heatwave</td><td style='padding:4px 8px;'>Logistic Regression</td></tr>
+                <tr><td style='padding:4px 8px; color:#888;'>ML -AQI</td><td style='padding:4px 8px;'>XGBoost (R²=0.86)</td></tr>
+                <tr><td style='padding:4px 8px; color:#888;'>ML -Heatwave</td><td style='padding:4px 8px;'>Logistic Regression</td></tr>
                 <tr><td style='padding:4px 8px; color:#888;'>Viz</td><td style='padding:4px 8px;'>Plotly + Folium</td></tr>
                 <tr><td style='padding:4px 8px; color:#888;'>Database</td><td style='padding:4px 8px;'>SQLite</td></tr>
                 <tr><td style='padding:4px 8px; color:#888;'>API Météo</td><td style='padding:4px 8px;'>Open-Meteo (real-time)</td></tr>
@@ -130,7 +130,7 @@ def show_about():
     with m1:
         st.markdown("""
         <div class='airsentinel-card' style='border-left:4px solid #007A5E;'>
-            <b style='color:#007A5E; font-size:15px;'>🌫️ Modèle AQI — XGBoost</b><br><br>
+            <b style='color:#007A5E; font-size:15px;'>🌫️ Modèle AQI -XGBoost</b><br><br>
             <b>Variables clés / Key features:</b>
             <ul style='font-size:12px; margin-top:6px;'>
                 <li>precipitation_sum (précipitations totales)</li>
@@ -154,7 +154,7 @@ def show_about():
     with m2:
         st.markdown("""
         <div class='airsentinel-card' style='border-left:4px solid #CE1126;'>
-            <b style='color:#CE1126; font-size:15px;'>🌡️ Modèle Vague de chaleur — Régression Logistique</b><br><br>
+            <b style='color:#CE1126; font-size:15px;'>🌡️ Modèle Vague de chaleur -Régression Logistique</b><br><br>
             <b>Définition vague de chaleur:</b><br>
             <small>3 jours consécutifs avec Temp max > 90ème percentile local (ETCCDI)</small><br><br>
             <b>Variables clés / Key features:</b>
@@ -167,7 +167,7 @@ def show_about():
             </ul>
             <br>
             <b>Seuil de décision / Decision threshold: 0.20</b><br>
-            <small>(Optimisé pour maximiser le rappel — sécurité sanitaire)</small>
+            <small>(Optimisé pour maximiser le rappel -sécurité sanitaire)</small>
         </div>
         """, unsafe_allow_html=True)
 
@@ -179,7 +179,7 @@ def show_about():
         st.markdown("""
         <div style='background:#007A5E; border-radius:10px; padding:16px; text-align:center; color:white;'>
             <div style='font-size:24px; font-weight:900;'>✅ SAFE</div>
-            <div style='font-size:20px; font-weight:800;'>0 — 33</div>
+            <div style='font-size:20px; font-weight:800;'>0 -33</div>
             <div style='font-size:12px; opacity:0.9; margin-top:6px;'>
                 Qualité acceptable<br>Air quality acceptable
             </div>
@@ -189,9 +189,9 @@ def show_about():
         st.markdown("""
         <div style='background:#FCD116; border-radius:10px; padding:16px; text-align:center; color:#1A1A1A;'>
             <div style='font-size:24px; font-weight:900;'>⚠️ VIGILANCE</div>
-            <div style='font-size:20px; font-weight:800;'>34 — 66</div>
+            <div style='font-size:20px; font-weight:800;'>34 -66</div>
             <div style='font-size:12px; opacity:0.8; margin-top:6px;'>
-                Qualité modérée — Personnes sensibles<br>Moderate — Sensitive people
+                Qualité modérée -Personnes sensibles<br>Moderate -Sensitive people
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -199,9 +199,9 @@ def show_about():
         st.markdown("""
         <div style='background:#CE1126; border-radius:10px; padding:16px; text-align:center; color:white; animation:blink 1.5s infinite;'>
             <div style='font-size:24px; font-weight:900;'>🚨 DANGER</div>
-            <div style='font-size:20px; font-weight:800;'>67 — 100</div>
+            <div style='font-size:20px; font-weight:800;'>67 -100</div>
             <div style='font-size:12px; opacity:0.9; margin-top:6px;'>
-                Qualité dangereuse — Alertes sanitaires<br>Dangerous — Health alerts
+                Qualité dangereuse -Alertes sanitaires<br>Dangerous -Health alerts
             </div>
         </div>
         """, unsafe_allow_html=True)

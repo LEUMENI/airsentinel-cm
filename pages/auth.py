@@ -38,7 +38,7 @@ def show_auth_page():
             <span style="background:rgba(0,122,94,0.12); border:1px solid #007A5E;
                          color:#007A5E; padding:0.3rem 1rem; border-radius:20px;
                          font-size:0.8rem; font-weight:600;">
-                🏆 IndabaX Cameroon 2026 — InsightX D_Vas
+                🏆 IndabaX Cameroon 2026 -InsightX D_Vas
             </span>
         </div>
         """, unsafe_allow_html=True)

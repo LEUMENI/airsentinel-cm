@@ -27,7 +27,7 @@ def show_admin():
 
     st.markdown("""
     <div class='tricolor-bar'></div>
-    <h2 style='margin:0; font-weight:900;'>⚙️ Administration — AirSentinel CM</h2>
+    <h2 style='margin:0; font-weight:900;'>⚙️ Administration -AirSentinel CM</h2>
     <p style='color:#CE1126; font-weight:700; margin-top:4px;'>
         👑 Accès réservé aux administrateurs / Admin access only
     </p>
@@ -197,7 +197,7 @@ def _show_stats_tab(lang, paper_color, text_color, dark):
             marker=dict(color="#007A5E", opacity=0.8),
         ))
         fig1.update_layout(
-            title=dict(text="📈 Prédictions par jour — 30 derniers jours", font=dict(color=text_color)),
+            title=dict(text="📈 Prédictions par jour -30 derniers jours", font=dict(color=text_color)),
             paper_bgcolor=paper_color, plot_bgcolor=paper_color,
             font=dict(color=text_color), height=280,
             margin=dict(l=10, r=10, t=40, b=10),
@@ -279,7 +279,7 @@ def _show_predictions_tab(lang, paper_color, text_color):
                      "DANGER": "background-color:#CE1126;color:white"}
                 return c.get(val, "")
 
-            styled = df.style.applymap(style_risk, subset=["Niveau de risque"])
+            styled = df.style.map(style_risk, subset=["Niveau de risque"])
             st.dataframe(styled, use_container_width=True, hide_index=True)
 
             csv = df.to_csv(index=False)
@@ -310,7 +310,7 @@ def _show_predictions_tab(lang, paper_color, text_color):
                 return c.get(val, "")
 
             if "risk_level" in df_hw.columns:
-                styled_hw = df_hw.style.applymap(style_risk2, subset=["risk_level"])
+                styled_hw = df_hw.style.map(style_risk2, subset=["risk_level"])
                 st.dataframe(styled_hw, use_container_width=True, hide_index=True)
             else:
                 st.dataframe(df_hw, use_container_width=True, hide_index=True)
@@ -356,7 +356,7 @@ def _show_alerts_validation_tab(lang, current_user, card_bg, border):
             with col_info:
                 st.markdown(f"""
                 <div style='background:{card_bg}; border:1px solid {border}; border-radius:8px; padding:10px 14px;'>
-                    {type_icon} <b>{alert.get('city', '—')}</b> — {type_label}<br>
+                    {type_icon} <b>{alert.get('city', '—')}</b> -{type_label}<br>
                     <small>Seuil: {alert['threshold']} | Par: {alert.get('username', '—')} | 
                     Créée: {alert.get('created_at', '')[:10]}</small>
                 </div>
@@ -377,14 +377,14 @@ def _show_alerts_validation_tab(lang, current_user, card_bg, border):
     if confirmed:
         with st.expander(f"✅ Alertes validées ({len(confirmed)})"):
             for alert in confirmed[:10]:
-                st.markdown(f"✅ **{alert.get('city', '—')}** — {alert['alert_type']} | "
+                st.markdown(f"✅ **{alert.get('city', '—')}** -{alert['alert_type']} | "
                             f"Seuil: {alert['threshold']} | "
                             f"Validée le: {alert.get('validated_at', '')[:10] if alert.get('validated_at') else 'N/A'}")
 
     if rejected:
         with st.expander(f"❌ Alertes rejetées ({len(rejected)})"):
             for alert in rejected[:10]:
-                st.markdown(f"❌ **{alert.get('city', '—')}** — {alert['alert_type']} | "
+                st.markdown(f"❌ **{alert.get('city', '—')}** -{alert['alert_type']} | "
                             f"Seuil: {alert['threshold']}")
 
 

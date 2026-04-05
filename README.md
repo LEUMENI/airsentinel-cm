@@ -3,7 +3,7 @@
 **Surveiller l'air. Protéger les populations.**  
 *Monitor the air. Protect the people.*
 
-> IndabaX Cameroon 2026 — Hackathon "L'IA au service de la résilience climatique et sanitaire"  
+> IndabaX Cameroon 2026 -Hackathon "L'IA au service de la résilience climatique et sanitaire"  
 > Équipe **InsightX D_Vas**
 
 ---
@@ -72,18 +72,18 @@ airsentinel_cm/
 
 ## 🤖 Modèles ML
 
-### Modèle AQI — XGBoost
+### Modèle AQI -XGBoost
 - **Target** : PM2.5 proxy (µg/m³)
 - **R² validation** : 0.861 | **R² holdout** : 0.857
 - **MAE** : 1.62 µg/m³ | **RMSE** : 2.04 µg/m³
 - **Top features** : rain_sum, precipitation_sum, precipitation_hours, time_month, time_cos, et0_fao_evapotranspiration, temperature_2m_max, temperature_2m_mean
 - **Scaling** : score = min(100, PM2.5/35 × 100)
 
-### Modèle Vague de chaleur — Régression Logistique
+### Modèle Vague de chaleur -Régression Logistique
 - **Target** : vague de chaleur dans J+3 (fenêtre 3 jours consécutifs > 90e percentile local)
 - **ROC-AUC** : 0.9632 | **Recall classe 1** : 0.82
-- **Seuil décision** : 0.20 (optimisé pour maximiser le rappel — sécurité sanitaire)
-- **Définition** : ETCCDI — 3 jours consécutifs avec Tmax > 90e percentile local
+- **Seuil décision** : 0.20 (optimisé pour maximiser le rappel -sécurité sanitaire)
+- **Définition** : ETCCDI -3 jours consécutifs avec Tmax > 90e percentile local
 
 ---
 
@@ -91,9 +91,9 @@ airsentinel_cm/
 
 | Score | Niveau | Couleur |
 |-------|--------|---------|
-| 0 — 33 | ✅ SAFE | #007A5E (vert) |
-| 34 — 66 | ⚠️ VIGILANCE | #FCD116 (jaune) |
-| 67 — 100 | 🚨 DANGER | #CE1126 (rouge) |
+| 0 -33 | ✅ SAFE | #007A5E (vert) |
+| 34 -66 | ⚠️ VIGILANCE | #FCD116 (jaune) |
+| 67 -100 | 🚨 DANGER | #CE1126 (rouge) |
 
 ---
 
@@ -111,10 +111,10 @@ airsentinel_cm/
 
 | Membre | Rôle |
 |--------|------|
-| **Lionel Leumeni** | Software Engineer — Architecture & Développement |
-| **Danielle** | Data Scientist — Modèle AQI (XGBoost) |
-| **Christy** | Data Scientist — Modèle Vague de chaleur |
-| **Belgrade** | Data Scientist — Analyse & Validation |
+| **Lionel Leumeni** | Software Engineer -Architecture & Développement |
+| **Danielle** | Data Scientist -Modèle AQI (XGBoost) |
+| **Christy** | Data Scientist -Modèle Vague de chaleur |
+| **Belgrade** | Data Scientist -Analyse & Validation |
 
 ---
 
@@ -126,4 +126,4 @@ airsentinel_cm/
 
 ---
 
-*AirSentinel CM © 2026 — InsightX D_Vas — IndabaX Cameroon*
+*AirSentinel CM © 2026 -InsightX D_Vas -IndabaX Cameroon*

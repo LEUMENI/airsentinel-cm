@@ -24,7 +24,7 @@ def show_alerts():
 
     st.markdown(f"""
     <div class='section-header'>
-        <h3>{'🔔 Alertes — Système de surveillance' if lang=='fr' else '🔔 Alerts — Monitoring system'}</h3>
+        <h3>{'🔔 Alertes -Système de surveillance' if lang=='fr' else '🔔 Alerts -Monitoring system'}</h3>
         <p>{'Alertes automatiques basées sur les données temps réel Open-Meteo' if lang=='fr'
             else 'Automatic alerts based on Open-Meteo real-time data'}</p>
     </div>
@@ -154,7 +154,7 @@ def _show_realtime_scan(lang, user, paper_color, text_color, subtext, border, da
                     st.warning(f"⚡ {'Alerte automatique déclenchée' if lang=='fr' else 'Automatic alert triggered'}: {tr}")
                 log_activity(user["id"], "AUTO_ALERT", f"City:{scan_city} AQI:{aqi_res['score']:.1f} HW:{hw_res['probability']:.2f}")
             else:
-                st.success(f"✅ {'Aucune alerte — seuils non dépassés.' if lang=='fr' else 'No alert — thresholds not exceeded.'}")
+                st.success(f"✅ {'Aucune alerte -seuils non dépassés.' if lang=='fr' else 'No alert -thresholds not exceeded.'}")
 
     # Recent scans table
     st.markdown("<br>", unsafe_allow_html=True)
@@ -240,7 +240,7 @@ def _show_my_alerts(lang, user, paper_color, text_color, subtext, border):
         with col_i:
             st.markdown(f"""
             <div class='as-card' style='padding:10px 14px;'>
-                {icon} <b>{alert['city']}</b> — {alert['alert_type']}
+                {icon} <b>{alert['city']}</b> -{alert['alert_type']}
                 &nbsp;|&nbsp; {'Seuil' if lang=='fr' else 'Threshold'}: <b>{alert['threshold']}</b>
                 &nbsp;|&nbsp; {validated}
                 <br><small style='color:{subtext};'>{alert.get('created_at','')[:16]}</small>
@@ -256,7 +256,7 @@ def _show_whatsapp_demo(lang, user, paper_color, text_color, subtext, border, da
     """Exemple concret de réception d'alerte WhatsApp par un utilisateur."""
     st.markdown(f"""
     <div class='section-header'>
-        <h3>📱 {'Simulation — Alerte WhatsApp citoyen' if lang=='fr' else 'Simulation — Citizen WhatsApp alert'}</h3>
+        <h3>📱 {'Simulation -Alerte WhatsApp citoyen' if lang=='fr' else 'Simulation -Citizen WhatsApp alert'}</h3>
         <p>{'Exemple concret d\'une alerte reçue par un citoyen de Garoua' if lang=='fr'
             else 'Concrete example of an alert received by a citizen of Garoua'}</p>
     </div>
@@ -265,34 +265,50 @@ def _show_whatsapp_demo(lang, user, paper_color, text_color, subtext, border, da
     col_demo, col_phone = st.columns([2, 3])
 
     with col_demo:
-        # Sélection scénario
         scenario = st.selectbox(
             "Scénario de démonstration" if lang=="fr" else "Demo scenario",
-            ["🌡️ Vague de chaleur — Garoua DANGER",
-             "🌫️ Qualité de l'air — Maroua VIGILANCE",
-             "✅ Tout normal — Yaoundé SAFE"]
+            ["🌡️ Vague de chaleur -Garoua DANGER",
+             "🌫️ Qualité de l'air -Maroua VIGILANCE",
+             "✅ Tout normal -Yaoundé SAFE"]
         )
 
-        city_for_demo = st.selectbox("Ville destinataire" if lang=="fr" else "Recipient city",
-                                      list(CAMEROON_CITIES.keys()), key="wa_city")
+        city_for_demo = st.selectbox(
+            "Ville destinataire" if lang=="fr" else "Recipient city",
+            list(CAMEROON_CITIES.keys()),
+            key="wa_city_input"   # ← clé unique pour le widget
+        )
 
-        phone_demo = st.text_input("Numéro WhatsApp" if lang=="fr" else "WhatsApp number",
-                                    value="+237 690 000 000", key="wa_phone")
+        phone_demo = st.text_input(
+            "Numéro WhatsApp" if lang=="fr" else "WhatsApp number",
+            value="+237 690 000 000",
+            key="wa_phone_input"  # ← clé unique pour le widget (différente de wa_phone)
+        )
 
-        if st.button("📤 Envoyer simulation" if lang=="fr" else "📤 Send simulation",
-                      use_container_width=True, key="wa_send"):
-            log_activity(user["id"], "WHATSAPP_SIMULATION", f"City:{city_for_demo} Phone:{phone_demo}")
-            st.session_state["wa_sent"] = True
+        if st.button(
+            "📤 Envoyer simulation" if lang=="fr" else "📤 Send simulation",
+            use_container_width=True,
+            key="wa_send"
+        ):
+            log_activity(user["id"], "WHATSAPP_SIMULATION",
+                         f"City:{city_for_demo} Phone:{phone_demo}")
+            # On sauvegarde dans des clés DIFFÉRENTES des clés des widgets
+            st.session_state["wa_sent"]     = True
             st.session_state["wa_scenario"] = scenario
-            st.session_state["wa_phone"] = phone_demo
-            st.session_state["wa_city"] = city_for_demo
+            st.session_state["wa_saved_phone"] = phone_demo   # ← clé différente
+            st.session_state["wa_saved_city"]  = city_for_demo # ← clé différente
             st.rerun()
 
         # Import fichier
         st.markdown("---")
-        st.markdown(f"<p class='form-label-custom'>{'📁 Diffusion en masse' if lang=='fr' else '📁 Mass broadcast'}</p>", unsafe_allow_html=True)
-        uploaded = st.file_uploader("CSV/TXT numéros" if lang=="fr" else "CSV/TXT numbers",
-                                     type=["csv","txt"], key="wa_upload")
+        st.markdown(
+            f"<p class='form-label-custom'>{'📁 Diffusion en masse' if lang=='fr' else '📁 Mass broadcast'}</p>",
+            unsafe_allow_html=True
+        )
+        uploaded = st.file_uploader(
+            "CSV/TXT numéros" if lang=="fr" else "CSV/TXT numbers",
+            type=["csv","txt"],
+            key="wa_upload"
+        )
         if uploaded:
             try:
                 if uploaded.name.endswith(".csv"):
@@ -308,76 +324,79 @@ def _show_whatsapp_demo(lang, user, paper_color, text_color, subtext, border, da
             nb = len(st.session_state["mass_phones"])
             if st.button(f"📤 Simuler diffusion ({nb} destinataires)", use_container_width=True):
                 st.success(f"🎉 {nb} messages WhatsApp simulés !")
-                log_activity(user["id"], "MASS_WHATSAPP_SIM", f"{nb} contacts, city:{city_for_demo}")
+                log_activity(user["id"], "MASS_WHATSAPP_SIM",
+                             f"{nb} contacts, city:{city_for_demo}")
 
     with col_phone:
-        # Rendu du smartphone WhatsApp
         if st.session_state.get("wa_sent"):
-            sc = st.session_state.get("wa_scenario", "")
-            city_wa = st.session_state.get("wa_city", "Garoua")
-            phone_wa = st.session_state.get("wa_phone", "+237 690 000 000")
-            now_str = datetime.now().strftime("%H:%M")
+            sc       = st.session_state.get("wa_scenario", "")
+            # On lit depuis les clés de SAUVEGARDE, pas les clés des widgets
+            city_wa  = st.session_state.get("wa_saved_city",  "Garoua")
+            phone_wa = st.session_state.get("wa_saved_phone", "+237 690 000 000")
+            now_str  = datetime.now().strftime("%H:%M")
 
             if "Vague" in sc or "Heatwave" in sc or "DANGER" in sc:
-                msg_fr = f"""🚨 *ALERTE VAGUE DE CHALEUR — AirSentinel CM*
+                msg_fr = f"""🚨 *ALERTE VAGUE DE CHALEUR -AirSentinel CM*
 
 📍 *Ville:* {city_wa}
 🌡️ *Niveau:* DANGER
 📊 *Probabilité:* 87.3%
 
 ⚠️ *Recommandations urgentes:*
-• Restez à l'intérieur entre 11h et 16h
-• Hydratez-vous toutes les heures
-• Surveillez les personnes âgées et les enfants
-• Appelez le SAMU si malaise: 15
+- Restez à l'intérieur entre 11h et 16h
+- Hydratez-vous toutes les heures
+- Surveillez les personnes âgées et les enfants
+- Appelez le SAMU si malaise: 15
 
 📱 _Alerte générée automatiquement par AirSentinel CM_
-🌿 _InsightX D_Vas — IndabaX Cameroon 2026_"""
-                msg_en = f"""🚨 *HEATWAVE ALERT — AirSentinel CM*
+🌿 _InsightX D_Vas -IndabaX Cameroon 2026_"""
+                msg_en = f"""🚨 *HEATWAVE ALERT -AirSentinel CM*
 
 📍 *City:* {city_wa}
 🌡️ *Level:* DANGER
 📊 *Probability:* 87.3%
 
 ⚠️ *Urgent recommendations:*
-• Stay indoors between 11am and 4pm
-• Hydrate every hour
-• Monitor elderly and children
-• Call emergency if heatstroke: 15
+- Stay indoors between 11am and 4pm
+- Hydrate every hour
+- Monitor elderly and children
+- Call emergency if heatstroke: 15
 
 📱 _Automatically generated by AirSentinel CM_
-🌿 _InsightX D_Vas — IndabaX Cameroon 2026_"""
+🌿 _InsightX D_Vas -IndabaX Cameroon 2026_"""
                 bg_strip = "#B91C1C"
+
             elif "Qualité" in sc or "Air Quality" in sc:
-                msg_fr = f"""⚠️ *ALERTE QUALITÉ DE L'AIR — AirSentinel CM*
+                msg_fr = f"""⚠️ *ALERTE QUALITÉ DE L'AIR -AirSentinel CM*
 
 📍 *Ville:* {city_wa}
 🌫️ *Proxy PM2.5:* 58.4/100
 📊 *Niveau:* VIGILANCE
 
 📌 *Recommandations:*
-• Personnes sensibles: limitez les activités extérieures
-• Portez un masque si vous avez des problèmes respiratoires
-• Aérez vos locaux aux heures fraîches (matin/soir)
+- Personnes sensibles: limitez les activités extérieures
+- Portez un masque si vous avez des problèmes respiratoires
+- Aérez vos locaux aux heures fraîches (matin/soir)
 
 📱 _Alerte générée automatiquement par AirSentinel CM_
-🌿 _InsightX D_Vas — IndabaX Cameroon 2026_"""
-                msg_en = f"""⚠️ *AIR QUALITY ALERT — AirSentinel CM*
+🌿 _InsightX D_Vas -IndabaX Cameroon 2026_"""
+                msg_en = f"""⚠️ *AIR QUALITY ALERT -AirSentinel CM*
 
 📍 *City:* {city_wa}
 🌫️ *Proxy PM2.5:* 58.4/100
 📊 *Level:* VIGILANCE
 
 📌 *Recommendations:*
-• Sensitive groups: limit outdoor activities
-• Wear a mask if you have respiratory issues
-• Ventilate rooms during cool hours (morning/evening)
+- Sensitive groups: limit outdoor activities
+- Wear a mask if you have respiratory issues
+- Ventilate rooms during cool hours (morning/evening)
 
 📱 _Automatically generated by AirSentinel CM_
-🌿 _InsightX D_Vas — IndabaX Cameroon 2026_"""
+🌿 _InsightX D_Vas -IndabaX Cameroon 2026_"""
                 bg_strip = "#B8860B"
+
             else:
-                msg_fr = f"""✅ *BONNE NOUVELLE — AirSentinel CM*
+                msg_fr = f"""✅ *BONNE NOUVELLE -AirSentinel CM*
 
 📍 *Ville:* {city_wa}
 🌿 *Qualité de l'air:* SAFE (12.3/100)
@@ -386,9 +405,9 @@ def _show_whatsapp_demo(lang, user, paper_color, text_color, subtext, border, da
 😊 La qualité de l'air est bonne aujourd'hui.
 Profitez des espaces verts en toute sécurité !
 
-📱 _Rapport quotidien — AirSentinel CM_
-🌿 _InsightX D_Vas — IndabaX Cameroon 2026_"""
-                msg_en = f"""✅ *GOOD NEWS — AirSentinel CM*
+📱 _Rapport quotidien -AirSentinel CM_
+🌿 _InsightX D_Vas -IndabaX Cameroon 2026_"""
+                msg_en = f"""✅ *GOOD NEWS -AirSentinel CM*
 
 📍 *City:* {city_wa}
 🌿 *Air quality:* SAFE (12.3/100)
@@ -397,30 +416,25 @@ Profitez des espaces verts en toute sécurité !
 😊 Air quality is good today.
 Enjoy outdoor spaces safely!
 
-📱 _Daily report — AirSentinel CM_
-🌿 _InsightX D_Vas — IndabaX Cameroon 2026_"""
+📱 _Daily report -AirSentinel CM_
+🌿 _InsightX D_Vas -IndabaX Cameroon 2026_"""
                 bg_strip = "#007A5E"
 
             msg = msg_fr if lang == "fr" else msg_en
-            # Formatage simple pour HTML
             msg_html = msg.replace("\n", "<br>").replace("*", "<b>", 1)
             for _ in range(20):
                 msg_html = msg_html.replace("*", "</b>", 1) if "<b>" in msg_html else msg_html.replace("*","",1)
 
-            # Rendu smartphone
             st.markdown(f"""
             <div style='display:flex; justify-content:center;'>
               <div style='width:310px;'>
-                <!-- Téléphone -->
                 <div style='background:{"#1A1A1A" if dark else "#2C2C2C"}; border-radius:36px;
                             padding:12px; box-shadow:0 8px 32px rgba(0,0,0,0.4);
                             border:3px solid {"#3A3A3A" if dark else "#555"};'>
-                  <!-- Barre status -->
                   <div style='display:flex; justify-content:space-between; padding:4px 16px;
                               font-size:11px; color:#CCC; margin-bottom:4px;'>
                     <span>Cameroun Mobile</span><span>{now_str}</span>
                   </div>
-                  <!-- Header WhatsApp -->
                   <div style='background:{bg_strip}; border-radius:8px 8px 0 0;
                               padding:10px 14px; display:flex; align-items:center; gap:8px;'>
                     <div style='width:32px; height:32px; border-radius:50%; background:white;
@@ -431,14 +445,12 @@ Enjoy outdoor spaces safely!
                       <div style='color:rgba(255,255,255,0.8); font-size:10px;'>en ligne · {now_str}</div>
                     </div>
                   </div>
-                  <!-- Corps conversation -->
                   <div class='whatsapp-container' style='min-height:280px; padding:14px;'>
                     <div class='whatsapp-bubble'>
                       {msg_html}
                       <div class='whatsapp-time'>{now_str} ✓✓</div>
                     </div>
                   </div>
-                  <!-- Input bar -->
                   <div style='background:{"#2C2C2E" if dark else "#F0F0F0"}; border-radius:0 0 8px 8px;
                               padding:8px 12px; display:flex; align-items:center; gap:8px;'>
                     <div style='flex:1; background:{"#3A3A3C" if dark else "white"};
@@ -449,7 +461,6 @@ Enjoy outdoor spaces safely!
                                 font-size:14px;'>🎤</div>
                   </div>
                 </div>
-                <!-- Destinataire -->
                 <div style='text-align:center; margin-top:10px; font-size:11px; color:{subtext};'>
                   📱 Envoyé à: <b>{phone_wa}</b>
                 </div>

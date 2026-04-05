@@ -55,7 +55,7 @@ def show_aqi_prediction():
 
     st.markdown(f"""
     <div class='section-header'>
-        <h3>{'🌫️ Prédiction Proxy PM2.5 — Qualité de l\'air' if lang=='fr' else '🌫️ Proxy PM2.5 Prediction — Air Quality'}</h3>
+        <h3>{'🌫️ Prédiction Proxy PM2.5 -Qualité de l\'air' if lang=='fr' else '🌫️ Proxy PM2.5 Prediction -Air Quality'}</h3>
         <p>{'AirSentinel CM • Modèle XGBoost entraîné sur données camerounaises 2020–2025' if lang=='fr' else 'AirSentinel CM • XGBoost model trained on 2020–2025 Cameroonian data'}</p>
     </div>
     """, unsafe_allow_html=True)
@@ -113,7 +113,7 @@ def show_aqi_prediction():
     st.markdown(f"<div class='form-label-custom'>{header}</div>", unsafe_allow_html=True)
 
     with st.form("aqi_form"):
-        # Ligne 1 — Les 3 variables précipitations (les + importantes)
+        # Ligne 1 -Les 3 variables précipitations (les + importantes)
         st.markdown(f"<p style='font-size:12px; color:{subtext}; margin-bottom:6px;'>{'💧 Précipitations (variables les plus influentes)' if lang=='fr' else '💧 Precipitation (most influential features)'}</p>", unsafe_allow_html=True)
         p1, p2, p3 = st.columns(3)
         with p1:
@@ -126,7 +126,7 @@ def show_aqi_prediction():
             prec_h = st.number_input(fl["precipitation_hours"],
                 value=float(rt.get("precipitation_hours", 0.0)), min_value=0.0, max_value=24.0, step=0.5, format="%.1f")
 
-        # Ligne 2 — Températures
+        # Ligne 2 -Températures
         st.markdown(f"<p style='font-size:12px; color:{subtext}; margin:8px 0 6px;'>{'🌡️ Températures' if lang=='fr' else '🌡️ Temperatures'}</p>", unsafe_allow_html=True)
         t1, t2 = st.columns(2)
         with t1:
@@ -136,14 +136,14 @@ def show_aqi_prediction():
             temp_mean = st.number_input(fl["temperature_2m_mean"],
                 value=float(rt.get("temperature_2m_mean", 25.0)), min_value=-10.0, max_value=55.0, step=0.1, format="%.1f")
 
-        # Ligne 3 — ET0
+        # Ligne 3 -ET0
         st.markdown(f"<p style='font-size:12px; color:{subtext}; margin:8px 0 6px;'>🌿 Évapotranspiration</p>", unsafe_allow_html=True)
         e1, e2 = st.columns(2)
         with e1:
             et0 = st.number_input(fl["et0_fao_evapotranspiration"],
                 value=float(rt.get("et0_fao_evapotranspiration", 5.0)), min_value=0.0, max_value=30.0, step=0.1, format="%.1f")
         with e2:
-            # time_cos est calculé automatiquement depuis la date — affiché en lecture seule
+            # time_cos est calculé automatiquement depuis la date -affiché en lecture seule
             import math
             doy = selected_date.timetuple().tm_yday
             auto_cos = round(math.cos(2 * math.pi * doy / 365.25), 4)
@@ -277,8 +277,8 @@ def show_aqi_prediction():
                     "en": "⚠️ Moderately degraded air quality.\nPM2.5 between WHO thresholds.\nSensitive groups: limit prolonged outdoor activities."
                 },
                 "DANGER": {
-                    "fr": "🚨 DANGER — PM2.5 élevé détecté !\nÉviter toute activité extérieure prolongée.\nPortez un masque FFP2 si nécessaire.\nAlertez les autorités sanitaires locales.",
-                    "en": "🚨 DANGER — High PM2.5 detected!\nAvoid prolonged outdoor activities.\nWear FFP2 mask if necessary.\nAlert local health authorities."
+                    "fr": "🚨 DANGER -PM2.5 élevé détecté !\nÉviter toute activité extérieure prolongée.\nPortez un masque FFP2 si nécessaire.\nAlertez les autorités sanitaires locales.",
+                    "en": "🚨 DANGER -High PM2.5 detected!\nAvoid prolonged outdoor activities.\nWear FFP2 mask if necessary.\nAlert local health authorities."
                 }
             }
             msg = interp.get(risk, {}).get(lang, "")

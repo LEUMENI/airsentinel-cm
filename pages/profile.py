@@ -22,7 +22,7 @@ def show_profile():
 
     st.markdown("""
     <div class='tricolor-bar'></div>
-    <h2 style='margin:0; font-weight:900;'>👤 Mon Profil — My Profile</h2>
+    <h2 style='margin:0; font-weight:900;'>👤 Mon Profil -My Profile</h2>
     """, unsafe_allow_html=True)
 
     # ── Header card ───────────────────────────────────────────────────
@@ -170,7 +170,7 @@ def show_profile():
                              "DANGER": "background-color:#CE1126;color:white"}
                         return c.get(val, "")
 
-                    styled = df.style.applymap(style_risk, subset=["Niveau"])
+                    styled = df.style.map(style_risk, subset=["Niveau"])
                     st.dataframe(styled, use_container_width=True, hide_index=True, height=220)
 
             # Cities bar chart

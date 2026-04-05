@@ -40,7 +40,7 @@ def show_map():
 
     st.markdown(f"""
     <div class='section-header'>
-        <h3>{'🗺️ Carte Interactive — Cameroun' if lang=='fr' else '🗺️ Interactive Map — Cameroon'}</h3>
+        <h3>{'🗺️ Carte Interactive -Cameroun' if lang=='fr' else '🗺️ Interactive Map -Cameroon'}</h3>
         <p>{'Visualisation géospatiale des indices de qualité de l\'air et des vagues de chaleur' if lang=='fr'
             else 'Geospatial visualization of air quality indices and heatwaves'}</p>
     </div>
@@ -71,9 +71,10 @@ def show_map():
 
     tab1, tab2, tab3, tab4 = st.tabs([
         f"🌫️ {'Proxy PM2.5' if lang=='fr' else 'Proxy PM2.5'}",
+        f"🔥 {'Vagues de chaleur' if lang=='fr' else 'Heatwaves (Belgrade style)'}",
         f"🌡️ {'Températures' if lang=='fr' else 'Temperatures'}",
         f"🌧️ {'Précipitations' if lang=='fr' else 'Precipitation'}",
-        f"🔥 {'Vagues de chaleur (style Belgrade)' if lang=='fr' else 'Heatwaves (Belgrade style)'}",
+        
     ])
 
     with tab1:
@@ -105,7 +106,7 @@ def show_map():
                       "DANGER": "background-color:#B91C1C;color:white"}
             return colors.get(val, "")
 
-        styled = df.style.applymap(style_level, subset=["Niveau"])
+        styled = df.style.map(style_level, subset=["Niveau"])
         st.dataframe(styled, use_container_width=True, hide_index=True)
 
         # Graphique régions
@@ -135,7 +136,7 @@ def show_map():
 
 
 def _folium_map(city_data, map_type, dark, lang):
-    """Carte Folium sobre — fond unique lisible clair/sombre."""
+    """Carte Folium sobre -fond unique lisible clair/sombre."""
     tile = "CartoDB dark_matter" if dark else "CartoDB positron"
     m = folium.Map(location=[5.5, 12.3], zoom_start=6, tiles=tile,
                    prefer_canvas=True)
