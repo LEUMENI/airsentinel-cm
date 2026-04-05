@@ -11,7 +11,15 @@ import plotly.graph_objects as go
 import random
 
 from utils.translations import CAMEROON_CITIES, REGIONS
-from utils.models import get_risk_color, CITY_THRESHOLDS
+from utils.models import CITY_THRESHOLDS
+from utils.thresholds import (
+    get_aqi_level_from_score, get_aqi_color,
+    get_temp_color, get_temp_label,
+    get_precip_color, get_precip_class,
+    AQI_SCORE_SAFE_MAX, AQI_SCORE_VIGILANCE_MAX,
+    HW_COLORS, is_danger_level,
+)
+from utils.database import create_alert, log_activity, get_admin_emails
 
 
 def _mock_scores(seed=42):
@@ -33,6 +41,7 @@ def _mock_scores(seed=42):
 def show_map():
     lang = st.session_state.lang
     dark = st.session_state.dark_mode
+    user  = st.session_state.user 
     paper = "#2C2C2E" if dark else "#FFFFFF"
     text  = "#F2F2F7" if dark else "#2C2C2E"
     sub   = "#AEAEB2" if dark else "#636366"
@@ -59,6 +68,38 @@ def show_map():
                                  0, 100, (0, 100))
 
     city_data = _mock_scores()
+
+    # ── Alertes automatiques ─────────────────────────────────────────
+    danger_cities = [(c, d) for c, d in city_data.items()
+                    if d["score"] > AQI_SCORE_VIGILANCE_MAX]
+
+    if danger_cities:
+        if "map_alerts_sent" not in st.session_state:
+            st.session_state["map_alerts_sent"] = set()
+
+        new_alerts = []
+        for city, data in danger_cities:
+            key = f"{city}_{data['score']:.0f}"
+            if key not in st.session_state["map_alerts_sent"]:
+                create_alert(user["id"], city, "aqi",
+                            AQI_SCORE_VIGILANCE_MAX,
+                            score=data["score"], risk_level="DANGER")
+                new_alerts.append((city, data["score"]))
+                st.session_state["map_alerts_sent"].add(key)
+
+        if new_alerts:
+            try:
+                from utils.email_service import send_alert_to_admin
+                admin_emails = get_admin_emails()
+                for admin_email in admin_emails:
+                    for city, score in new_alerts:
+                        send_alert_to_admin(admin_email, city, score, "DANGER", "aqi")
+            except Exception:
+                pass
+
+            cities_str = ", ".join([f"**{c}** ({s:.0f}/100)" for c, s in new_alerts[:5]])
+            st.warning(f"⚡ **{len(new_alerts)} alerte(s) URGENT** : {cities_str} — Admin notifié.")
+
 
     # Apply filters
     filtered = {c: d for c, d in city_data.items()

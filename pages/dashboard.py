@@ -11,6 +11,7 @@ import random
 from utils.database import get_dashboard_stats, get_all_predictions_aqi
 from utils.translations import t, CAMEROON_CITIES
 from utils.models import get_risk_color
+from utils.thresholds import AQI_SCORE_SAFE_MAX, AQI_SCORE_VIGILANCE_MAX, get_aqi_color, get_aqi_level_from_score
 
 
 def show_dashboard():
@@ -51,20 +52,29 @@ def show_dashboard():
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # ── Cartes + Graphes ──────────────────────────────────────────────
-    col_l, col_r = st.columns([3, 2])
 
-    with col_l:
+# pages/dashboard.py
+
+def show_dashboard(dark, paper, text, sub, brd, lang):
+    # --- PREMIÈRE LIGNE ---
+    col_top_l, col_top_r = st.columns(2)
+    
+    with col_top_l:
         st.markdown(f"<div class='form-label-custom'>{'🗺️ Carte Proxy PM2.5 -Cameroun' if lang=='fr' else '🗺️ Proxy PM2.5 Map -Cameroon'}</div>", unsafe_allow_html=True)
         _show_aqi_map_plotly(dark, paper, text, sub, brd, lang)
-        st.markdown("<br>", unsafe_allow_html=True)
+
+    with col_top_r:
+        st.markdown(f"<div class='form-label-custom'>{'🍩 Distribution des niveaux de risque' if lang=='fr' else '🍩 Risk level distribution'}</div>", unsafe_allow_html=True)
+        _show_risk_pie(dark, paper, text, lang)
+
+    # --- DEUXIÈME LIGNE ---
+    col_bot_l, col_bot_r = st.columns(2)
+    
+    with col_bot_l:
         st.markdown(f"<div class='form-label-custom'>{'📈 Évolution Proxy PM2.5 -30 derniers jours' if lang=='fr' else '📈 Proxy PM2.5 Evolution -Last 30 days'}</div>", unsafe_allow_html=True)
         _show_evolution(dark, paper, text, brd, lang)
 
-    with col_r:
-        st.markdown(f"<div class='form-label-custom'>{'🍩 Distribution des niveaux de risque' if lang=='fr' else '🍩 Risk level distribution'}</div>", unsafe_allow_html=True)
-        _show_risk_pie(dark, paper, text, lang)
-        st.markdown("<br>", unsafe_allow_html=True)
+    with col_bot_r:
         st.markdown(f"<div class='form-label-custom'>{'📊 Score moyen par région' if lang=='fr' else '📊 Average score by region'}</div>", unsafe_allow_html=True)
         _show_region_bars(dark, paper, text, brd, lang)
 
@@ -207,8 +217,15 @@ def _show_evolution(dark, paper, text, brd, lang):
             line=dict(color=kaki_colors[region], width=2),
         ))
 
-    fig.add_hline(y=33, line_dash="dot", line_color="#007A5E", opacity=0.5, line_width=1)
-    fig.add_hline(y=66, line_dash="dot", line_color="#B91C1C", opacity=0.5, line_width=1)
+    from utils.thresholds import AQI_SCORE_SAFE_MAX, AQI_SCORE_VIGILANCE_MAX
+    fig.add_hline(y=AQI_SCORE_SAFE_MAX,
+              line_dash="dot", line_color="#007A5E", opacity=0.5,
+              annotation_text=f"Safe ({AQI_SCORE_SAFE_MAX})",
+              annotation_font_color="#007A5E")
+    fig.add_hline(y=AQI_SCORE_VIGILANCE_MAX,
+              line_dash="dot", line_color="#CE1126", opacity=0.5,
+              annotation_text=f"Urgent ({AQI_SCORE_VIGILANCE_MAX})",
+              annotation_font_color="#CE1126")
     fig.update_layout(
         paper_bgcolor=paper, plot_bgcolor=paper, font=dict(color=text),
         height=220, margin=dict(l=10,r=10,t=10,b=10),

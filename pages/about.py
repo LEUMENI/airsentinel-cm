@@ -19,12 +19,12 @@ TEAM_MEMBERS = [
                 "en": "Responsible for project orchestration, team supervision, and validation of models and the application."}
     },
     {
-        "name": "Danielle NKONHAWE",
-        "role": {"fr": "Développeuse de logiciels - Modèle Qualité de l'air", "en": "Software developer - Air Quality Model"},
+        "name": "Danielle FOTSI",
+        "role": {"fr": "Data scientist - Modèle Qualité de l'air", "en": "Software developer - Air Quality Model"},
         "photo": "profile_danielle.png",
         "linkedin": "https://www.linkedin.com/in/danielle-laura-nkonhawe-fotsi/",
-        "bio": {"fr": "Data Scientist spécialisée en machine learning et analyse climatique. Développement et validation du modèle de prédiction de la qualité de l'air (XGBoost).",
-                "en": "Data Scientist specialized in machine learning and climate analysis. Development and validation of the air quality prediction model (XGBoost)."}
+        "bio": {"fr": "Data scientist - project manager. Développement et validation du modèle de prédiction de la qualité de l'air (XGBoost).",
+                "en": "Data scientist - project manager. Development and validation of the air quality prediction model (XGBoost)."}
     },
     {
         "name": "Belgrade YONYA",

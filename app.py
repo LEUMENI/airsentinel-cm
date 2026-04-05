@@ -179,7 +179,6 @@ def show_sidebar():
         pages = [
             ("📊", "dashboard", t("nav_dashboard", lang)),
             ("🌫️", "aqi", t("nav_aqi", lang)),
-            ("🌡️", "heatwave", t("nav_heatwave", lang)),
             ("🗺️", "map", t("nav_map", lang)),
             ("🔔", "alerts", t("nav_alerts", lang)),
             ("ℹ️", "about", t("nav_about", lang)),
@@ -239,38 +238,55 @@ def main():
         show_auth_page()
         return
 
+    # --- ÉTAPE 1 : Récupérer les variables nécessaires ---
+    lang = st.session_state.lang
+    dark = st.session_state.dark_mode
+    
+    # Définit les couleurs en fonction du mode (doit matcher tes fonctions de dashboard)
+    if dark:
+        paper, text, sub, brd = "#000000", "#FFFFFF", "#BBBBBB", "#262626"
+    else:
+        paper, text, sub, brd = "#FFFFFF", "#1A1D27", "#64748B", "#E2E8F0"
+
+    # --- ÉTAPE 2 : Afficher la sidebar ---
     show_sidebar()
 
     page = st.session_state.page
 
+    # --- ÉTAPE 3 : Router vers les pages ---
     if page == "dashboard":
         from pages.dashboard import show_dashboard
-        show_dashboard()
+        # Maintenant dark, paper, etc. existent bien !
+        show_dashboard(dark, paper, text, sub, brd, lang)
+        
     elif page == "aqi":
         from pages.aqi_prediction import show_aqi_prediction
         show_aqi_prediction()
-    elif page == "heatwave":
-        from pages.heatwave_prediction import show_heatwave_prediction
-        show_heatwave_prediction()
+        
     elif page == "map":
         from pages.interactive_map import show_map
+        # Si ta page map a aussi besoin de styles, passe-les ici
         show_map()
+        
     elif page == "alerts":
         from pages.alerts import show_alerts
         show_alerts()
+        
     elif page == "about":
         from pages.about import show_about
         show_about()
+        
     elif page == "profile":
         from pages.profile import show_profile
         show_profile()
+        
     elif page == "admin" and st.session_state.user["role"] == "admin":
         from pages.admin import show_admin
         show_admin()
+        
     else:
         from pages.dashboard import show_dashboard
-        show_dashboard()
-
+        show_dashboard(dark, paper, text, sub, brd, lang)
 
 if __name__ == "__main__":
     main()

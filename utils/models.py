@@ -304,11 +304,8 @@ def predict_heatwave(input_dict: dict) -> dict:
 # ─── Shared helpers ───────────────────────────────────────────────────────────
 
 def get_risk_level(score: float) -> str:
-    if score <= 33:
-        return "SAFE"
-    elif score <= 66:
-        return "VIGILANCE"
-    return "DANGER"
+    from utils.thresholds import get_aqi_level_from_score
+    return get_aqi_level_from_score(score)
 
 
 def get_risk_color(level: str) -> str:

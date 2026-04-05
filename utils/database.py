@@ -213,7 +213,7 @@ def get_all_predictions_heatwave(limit=500):
 
 # ─── Alerts ───────────────────────────────────────────────────────────────────
 
-def create_alert(user_id, city, alert_type, threshold):
+def create_alert(user_id, city, alert_type, threshold, score=None, risk_level=None):
     conn = get_conn()
     conn.execute("""
         INSERT INTO alerts (user_id, city, alert_type, threshold, active, validated, created_at)
@@ -221,7 +221,6 @@ def create_alert(user_id, city, alert_type, threshold):
     """, (user_id, city, alert_type, threshold, datetime.now().isoformat()))
     conn.commit()
     conn.close()
-    log_activity(user_id, "ALERT_CREATED", f"City:{city} Type:{alert_type} Threshold:{threshold}")
 
 
 def get_user_alerts(user_id):
@@ -372,3 +371,12 @@ def get_activity_logs(limit=200):
     """, (limit,)).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+def get_admin_emails() -> list:
+    """Retourne les emails de tous les admins actifs."""
+    conn = get_conn()
+    rows = conn.execute(
+        "SELECT email FROM users WHERE role='admin' AND is_active=1"
+    ).fetchall()
+    conn.close()
+    return [r["email"] for r in rows]

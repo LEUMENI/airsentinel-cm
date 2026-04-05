@@ -30,10 +30,8 @@ def show_alerts():
     </div>
     """, unsafe_allow_html=True)
 
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "⚡ " + ("Scan temps réel" if lang=="fr" else "Real-time scan"),
+    tab1, tab2, tab3 = st.tabs([
         "➕ " + ("Créer alerte AQI" if lang=="fr" else "Create AQI alert"),
-        "🌡️ " + ("Créer alerte Vague" if lang=="fr" else "Create Heatwave alert"),
         "📋 " + ("Mes alertes" if lang=="fr" else "My alerts"),
         "📱 WhatsApp " + ("simulation" if lang=="fr" else "simulation"),
     ])
@@ -46,10 +44,7 @@ def show_alerts():
         _create_alert_form(lang, city_list, user, paper_color, subtext, border, "aqi")
     with tab3:
         _create_alert_form(lang, city_list, user, paper_color, subtext, border, "heatwave")
-    with tab4:
-        _show_my_alerts(lang, user, paper_color, text_color, subtext, border)
-    with tab5:
-        _show_whatsapp_demo(lang, user, paper_color, text_color, subtext, border, dark)
+   
 
 
 def _show_realtime_scan(lang, user, paper_color, text_color, subtext, border, dark):
