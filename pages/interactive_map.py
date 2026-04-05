@@ -112,7 +112,7 @@ def show_map():
 
     tab1, tab2, tab3, tab4 = st.tabs([
         f"🌫️ {'Proxy PM2.5' if lang=='fr' else 'Proxy PM2.5'}",
-        f"🔥 {'Vagues de chaleur' if lang=='fr' else 'Heatwaves (Belgrade style)'}",
+        f"🔥 {'Vagues de chaleur' if lang=='fr' else 'Heatwaves'}",
         f"🌡️ {'Températures' if lang=='fr' else 'Temperatures'}",
         f"🌧️ {'Précipitations' if lang=='fr' else 'Precipitation'}",
         
@@ -152,8 +152,8 @@ def show_map():
 
         # Graphique régions
         region_df = df.groupby("Région")["Proxy PM2.5"].mean().round(1).reset_index()
-        colors_r = [get_risk_color("DANGER" if v > 66 else ("VIGILANCE" if v > 33 else "SAFE"))
-                    for v in region_df["Proxy PM2.5"]]
+        colors_r = [get_aqi_color(get_aqi_level_from_score(v))
+            for v in region_df["Proxy PM2.5"]]
         fig = go.Figure(go.Bar(
             x=region_df["Proxy PM2.5"], y=region_df["Région"],
             orientation="h",
