@@ -56,14 +56,14 @@ def show_aqi_prediction():
     st.markdown(f"""
     <div class='section-header'>
         <h3>{'🌫️ Prédiction Proxy PM2.5 -Qualité de l\'air' if lang=='fr' else '🌫️ Proxy PM2.5 Prediction -Air Quality'}</h3>
-        <p>{'AirSentinel CM • Modèle XGBoost entraîné sur données camerounaises 2020–2025' if lang=='fr' else 'AirSentinel CM • XGBoost model trained on 2020–2025 Cameroonian data'}</p>
+        <p>{'AirSentinel CM • Modèle Gradient boosting entraîné sur données camerounaises 2020–2025' if lang=='fr' else 'AirSentinel CM • Gradient boosting model trained on 2020–2025 Cameroonian data'}</p>
     </div>
     """, unsafe_allow_html=True)
 
     # ── Info box modèle ───────────────────────────────────────────────
     st.markdown(f"""
     <div class='info-strip'>
-        <b>{'Modèle' if lang=='fr' else 'Model'}:</b> XGBoost &nbsp;|&nbsp;
+        <b>{'Modèle' if lang=='fr' else 'Model'}:</b> Gradient boosting &nbsp;|&nbsp;
         <b>R²:</b> 0.861 (validation) · 0.857 (holdout) &nbsp;|&nbsp;
         <b>MAE:</b> 1.64 µg/m³ &nbsp;|&nbsp;
         <b>{'18 variables sélectionnées' if lang=='fr' else '18 selected features'}</b>

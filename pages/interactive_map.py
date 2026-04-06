@@ -122,11 +122,12 @@ def show_map():
     with tab1:
         _folium_map(filtered, "aqi", dark, lang)
     with tab2:
-        _folium_map(filtered, "temp", dark, lang)
-    with tab3:
-        _folium_map(filtered, "precip", dark, lang)
-    with tab4:
         _folium_map_heatwave_belgrade(filtered, dark, lang, paper, text, sub, brd)
+    with tab3:
+        _folium_map(filtered, "temp", dark, lang)
+    with tab4:
+        _folium_map(filtered, "precip", dark, lang)
+    
 
     st.markdown("---")
     st.markdown(f"<div class='form-label-custom'>{'📋 Tableau récapitulatif' if lang=='fr' else '📋 Summary table'}</div>", unsafe_allow_html=True)

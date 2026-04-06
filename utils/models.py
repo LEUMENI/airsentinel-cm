@@ -1,18 +1,8 @@
-# ── Patch compatibilité sklearn _RemainderColsList ───────────────
-import sklearn.compose._column_transformer as _ct
-if not hasattr(_ct, '_RemainderColsList'):
-    class _RemainderColsList(list):
-        def __init__(self, columns):
-            super().__init__(columns)
-            self.columns = columns
-    _ct._RemainderColsList = _RemainderColsList
-# ─────────────────────────────────────────────────────────────────
-
-
 """
 AirSentinel CM - ML Model Loading and Prediction Utilities
-XGBoost (AQI/PM2.5) + Logistic Regression (Heatwave)
+Gradient boosting(AQI/PM2.5) + Logistic Regression (Heatwave)
 """
+
 import pickle
 import numpy as np
 import pandas as pd

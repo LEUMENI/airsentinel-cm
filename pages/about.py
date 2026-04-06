@@ -23,8 +23,8 @@ TEAM_MEMBERS = [
         "role": {"fr": "Data scientist - Modèle Qualité de l'air", "en": "Software developer - Air Quality Model"},
         "photo": "profile_danielle.png",
         "linkedin": "https://www.linkedin.com/in/danielle-laura-nkonhawe-fotsi/",
-        "bio": {"fr": "Data scientist - project manager. Développement et validation du modèle de prédiction de la qualité de l'air (XGBoost).",
-                "en": "Data scientist - project manager. Development and validation of the air quality prediction model (XGBoost)."}
+        "bio": {"fr": "Data scientist - project manager. Développement et validation du modèle de prédiction de la qualité de l'air (Gradient boosting).",
+                "en": "Data scientist - project manager. Development and validation of the air quality prediction model (Gradient boosting)."}
     },
     {
         "name": "Belgrade YONYA",
@@ -113,7 +113,7 @@ def show_about():
             <b style='color:#1A4D8F; font-size:16px;'>🛠️ Stack Technique / Tech Stack</b><br><br>
             <table style='width:100%; font-size:13px; border-collapse:collapse;'>
                 <tr><td style='padding:4px 8px; color:#888;'>Backend</td><td style='padding:4px 8px;'>Python 3.11 + Streamlit</td></tr>
-                <tr><td style='padding:4px 8px; color:#888;'>ML -AQI</td><td style='padding:4px 8px;'>XGBoost (R²=0.86)</td></tr>
+                <tr><td style='padding:4px 8px; color:#888;'>ML -AQI</td><td style='padding:4px 8px;'>Gradient boosting (R²=0.85)</td></tr>
                 <tr><td style='padding:4px 8px; color:#888;'>ML -Heatwave</td><td style='padding:4px 8px;'>Logistic Regression</td></tr>
                 <tr><td style='padding:4px 8px; color:#888;'>Viz</td><td style='padding:4px 8px;'>Plotly + Folium</td></tr>
                 <tr><td style='padding:4px 8px; color:#888;'>Database</td><td style='padding:4px 8px;'>SQLite</td></tr>
@@ -130,7 +130,7 @@ def show_about():
     with m1:
         st.markdown("""
         <div class='airsentinel-card' style='border-left:4px solid #007A5E;'>
-            <b style='color:#007A5E; font-size:15px;'>🌫️ Modèle AQI -XGBoost</b><br><br>
+            <b style='color:#007A5E; font-size:15px;'>🌫️ Modèle AQI -Gradient boosting </b><br><br>
             <b>Variables clés / Key features:</b>
             <ul style='font-size:12px; margin-top:6px;'>
                 <li>precipitation_sum (précipitations totales)</li>
@@ -246,7 +246,7 @@ def show_about():
         Développé avec ❤️ pour le Cameroun • Made with ❤️ for Cameroon<br>
         <span style='color:#007A5E;'>Python</span> •
         <span style='color:#FCD116;'>Streamlit</span> •
-        <span style='color:#CE1126;'>XGBoost</span> •
+        <span style='color:#CE1126;'>Gradient boosting</span> •
         <span style='color:#1A4D8F;'>Folium</span> •
         <span style='color:#007A5E;'>Open-Meteo</span>
     </div>

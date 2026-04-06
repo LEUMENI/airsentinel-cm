@@ -11,7 +11,7 @@
 ## 📋 Description
 
 AirSentinel CM est une application web d'intelligence artificielle qui prédit :
-- **L'Indice de Qualité de l'Air (AQI/PM2.5)** via XGBoost (R²=0.86)
+- **L'Indice de Qualité de l'Air (AQI/PM2.5)** via Gradient boosting (R²=0.85)
 - **Les vagues de chaleur** via Régression Logistique (ROC-AUC=0.96)
 
 pour **30 villes du Cameroun**, avec données météo en temps réel (Open-Meteo).
@@ -46,7 +46,7 @@ airsentinel_cm/
 ├── app.py                          # Point d'entrée principal
 ├── requirements.txt
 ├── models/
-│   ├── modele_pm25_insightx_final.pkl   # XGBoost AQI (R²=0.86)
+│   ├── modele_pm25_insightx_final.pkl   # Gradient boosting AQI (R²=0.85)
 │   └── heatwave_model.pkl               # LogReg Heatwave (AUC=0.96)
 ├── assets/
 │   └── profile_*.jpg/png           # Photos équipe
@@ -72,7 +72,7 @@ airsentinel_cm/
 
 ## 🤖 Modèles ML
 
-### Modèle AQI -XGBoost
+### Modèle AQI -Gradient boosting
 - **Target** : PM2.5 proxy (µg/m³)
 - **R² validation** : 0.861 | **R² holdout** : 0.857
 - **MAE** : 1.62 µg/m³ | **RMSE** : 2.04 µg/m³
@@ -112,7 +112,7 @@ airsentinel_cm/
 | Membre | Rôle |
 |--------|------|
 | **Lionel Leumeni** | Software Engineer -Architecture & Développement |
-| **Danielle** | Data Scientist -Modèle AQI (XGBoost) |
+| **Danielle** | Data Scientist -Modèle AQI (Gradient boosting) |
 | **Christy** | Data Scientist -Modèle Vague de chaleur |
 | **Belgrade** | Data Scientist -Analyse & Validation |
 
