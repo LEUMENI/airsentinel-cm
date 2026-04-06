@@ -66,7 +66,7 @@ def show_aqi_prediction():
         <b>{'Modèle' if lang=='fr' else 'Model'}:</b> XGBoost &nbsp;|&nbsp;
         <b>R²:</b> 0.861 (validation) · 0.857 (holdout) &nbsp;|&nbsp;
         <b>MAE:</b> 1.64 µg/m³ &nbsp;|&nbsp;
-        <b>{'8 variables sélectionnées' if lang=='fr' else '8 selected features'}</b>
+        <b>{'18 variables sélectionnées' if lang=='fr' else '18 selected features'}</b>
     </div>
     """, unsafe_allow_html=True)
 
@@ -109,7 +109,7 @@ def show_aqi_prediction():
     # ── Formulaire ────────────────────────────────────────────────────
     st.markdown("---")
     fl = FEATURE_LABELS[lang]
-    header = "📝 Variables du modèle (8 features sélectionnées)" if lang == "fr" else "📝 Model variables (8 selected features)"
+    header = "📝 Variables du modèle (18 features sélectionnées)" if lang == "fr" else "📝 Model variables (8 selected features)"
     st.markdown(f"<div class='form-label-custom'>{header}</div>", unsafe_allow_html=True)
 
     with st.form("aqi_form"):
@@ -289,7 +289,7 @@ def show_aqi_prediction():
             """, unsafe_allow_html=True)
 
         # Feature importance
-        st.markdown(f"<br><div class='form-label-custom'>{'🔍 Contribution des 8 variables sélectionnées' if lang=='fr' else '🔍 Contribution of the 8 selected features'}</div>", unsafe_allow_html=True)
+        st.markdown(f"<br><div class='form-label-custom'>{'🔍 Contribution des 18 variables sélectionnées' if lang=='fr' else '🔍 Contribution of the 8 selected features'}</div>", unsafe_allow_html=True)
         fl2 = FEATURE_LABELS[lang]
         feat_vals = {
             fl2["rain_sum"]: res["input"].get("rain_sum", 0),
