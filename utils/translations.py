@@ -57,7 +57,7 @@ TRANSLATIONS = {
     "alert_threshold": {"fr": "Seuil de déclenchement", "en": "Trigger threshold"},
     "alert_create_btn": {"fr": "Créer l'alerte", "en": "Create alert"},
     "alert_my_alerts": {"fr": "Mes alertes actives", "en": "My active alerts"},
-    "alert_notifications": {"fr": "Notifications récentes", "en": "Recent notifications"},
+    "alert_notifications": {"fr": "Simulation des alertes SMS/WhatsApp", "en": "SMS/WhatsApp alert simulation"},
     "alert_import_numbers": {"fr": "Importer fichier numéros (simulation SMS)", "en": "Import phone numbers (SMS simulation)"},
     "alert_simulate_send": {"fr": "Simuler l'envoi de notifications", "en": "Simulate sending notifications"},
     "alert_type_aqi": {"fr": "Indice qualité de l'air", "en": "Air quality index"},
