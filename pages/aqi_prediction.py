@@ -53,10 +53,12 @@ def show_aqi_prediction():
     subtext     = "#AEAEB2" if dark else "#636366"
     border      = "#3A3A3C" if dark else "#D4CDB8"
 
+    title_aqi = "Prediction Proxy PM2.5 - Qualite de l'air" if lang == "fr" else "Proxy PM2.5 Prediction - Air Quality"
+    desc_aqi  = "AirSentinel CM - Modele Gradient boosting entraine sur donnees camerounaises 2020-2025" if lang == "fr" else "AirSentinel CM - Gradient boosting model trained on 2020-2025 Cameroonian data"
     st.markdown(f"""
     <div class='section-header'>
-        <h3>{'🌫️ Prédiction Proxy PM2.5 -Qualité de l\'air' if lang=='fr' else '🌫️ Proxy PM2.5 Prediction -Air Quality'}</h3>
-        <p>{'AirSentinel CM • Modèle Gradient boosting entraîné sur données camerounaises 2020–2025' if lang=='fr' else 'AirSentinel CM • Gradient boosting model trained on 2020–2025 Cameroonian data'}</p>
+        <h3>🌫️ {title_aqi}</h3>
+        <p>{desc_aqi}</p>
     </div>
     """, unsafe_allow_html=True)
 
