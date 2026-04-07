@@ -143,10 +143,10 @@ def show_about():
             <br>
             <b>Métriques de performance / Metrics:</b><br>
             <table style='font-size:12px; width:100%;'>
-                <tr><td>R² validation</td><td><b style='color:#007A5E;'>0.861</b></td></tr>
-                <tr><td>R² holdout</td><td><b style='color:#007A5E;'>0.857</b></td></tr>
-                <tr><td>MAE holdout</td><td><b>1.62 µg/m³</b></td></tr>
-                <tr><td>RMSE holdout</td><td><b>2.04 µg/m³</b></td></tr>
+                <tr><td>R² validation</td><td><b style='color:#007A5E;'>0.8511</b></td></tr>
+                <tr><td>R² holdout</td><td><b style='color:#007A5E;'>0.8535</b></td></tr>
+                <tr><td>MAE holdout</td><td><b>1.89 µg/m³</b></td></tr>
+                <tr><td>RMSE holdout</td><td><b>2.44 µg/m³</b></td></tr>
             </table>
         </div>
         """, unsafe_allow_html=True)
