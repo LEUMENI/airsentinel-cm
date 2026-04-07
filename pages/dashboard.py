@@ -25,23 +25,31 @@ def show_dashboard():
     brd   = "#3A3A3C" if dark else "#D4CDB8"
     kaki  = "#6B7355" if dark else "#4A5240"
 
+    # ✅ Variables sorties AVANT le f-string (interdit en Python 3.11)
+    title = "📊 Tableau de bord - AirSentinel CM" if lang == "fr" else "📊 Dashboard - AirSentinel CM"
+    desc  = "Vue d'ensemble de la surveillance de la qualite de l'air au Cameroun" if lang == "fr" else "Overview of air quality monitoring in Cameroon"
+
     st.markdown(f"""
     <div class='section-header'>
-        <h3>{'📊 Tableau de bord - AirSentinel CM' if lang=='fr' else '📊 Dashboard - AirSentinel CM'}</h3>
-        <p>{'Vue d\'ensemble de la surveillance de la qualité de l\'air au Cameroun' if lang=='fr'
-            else 'Overview of air quality monitoring in Cameroon'}</p>
+        <h3>{title}</h3>
+        <p>{desc}</p>
     </div>
     """, unsafe_allow_html=True)
 
     # ── KPIs ──────────────────────────────────────────────────────────
     stats = get_dashboard_stats()
     k1, k2, k3, k4 = st.columns(4)
+
+    lbl_pred   = "Total predictions"    if lang == "en" else "Total predictions"
+    lbl_users  = "Users"                if lang == "en" else "Utilisateurs"
+    lbl_alerts = "Active alerts"        if lang == "en" else "Alertes actives"
+    lbl_today  = "Today"                if lang == "en" else "Aujourd'hui"
+
     kpis = [
-        (k1, "🔬", stats["total_predictions"],  "Total prédictions" if lang=="fr" else "Total predictions", kaki),
-        (k2, "👥", stats["total_users"],         "Utilisateurs"      if lang=="fr" else "Users",             "#4A6090"),
-        (k3, "🔔", stats["active_alerts"],       "Alertes actives"   if lang=="fr" else "Active alerts",
-         "#9A1515" if stats["active_alerts"] > 0 else "#4A5240"),
-        (k4, "📅", stats["predictions_today"],   "Aujourd'hui"       if lang=="fr" else "Today",             "#4A5240"),
+        (k1, "🔬", stats["total_predictions"], lbl_pred,   kaki),
+        (k2, "👥", stats["total_users"],        lbl_users,  "#4A6090"),
+        (k3, "🔔", stats["active_alerts"],      lbl_alerts, "#9A1515" if stats["active_alerts"] > 0 else "#4A5240"),
+        (k4, "📅", stats["predictions_today"],  lbl_today,  "#4A5240"),
     ]
     for col, icon, val, label, color in kpis:
         with col:
@@ -58,50 +66,59 @@ def show_dashboard():
     # ── LIGNE 1 : Carte + Camembert ───────────────────────────────────
     col_top_l, col_top_r = st.columns(2)
 
+    lbl_map  = "Carte Proxy PM2.5 - Cameroun"   if lang == "fr" else "Proxy PM2.5 Map - Cameroon"
+    lbl_pie  = "Distribution des niveaux de risque" if lang == "fr" else "Risk level distribution"
+    lbl_evol = "Evolution Proxy PM2.5 - 30 derniers jours" if lang == "fr" else "Proxy PM2.5 Evolution - Last 30 days"
+    lbl_bars = "Score moyen par region"          if lang == "fr" else "Average score by region"
+    lbl_last = "10 dernieres predictions Proxy PM2.5" if lang == "fr" else "Last 10 Proxy PM2.5 predictions"
+
     with col_top_l:
-        st.markdown(f"<div class='form-label-custom'>{'🗺️ Carte Proxy PM2.5 - Cameroun' if lang=='fr' else '🗺️ Proxy PM2.5 Map - Cameroon'}</div>",
-                    unsafe_allow_html=True)
+        st.markdown(f"<div class='form-label-custom'>🗺️ {lbl_map}</div>", unsafe_allow_html=True)
         _show_aqi_map_plotly(dark, paper, text, sub, brd, lang)
 
     with col_top_r:
-        st.markdown(f"<div class='form-label-custom'>{'🍩 Distribution des niveaux de risque' if lang=='fr' else '🍩 Risk level distribution'}</div>",
-                    unsafe_allow_html=True)
+        st.markdown(f"<div class='form-label-custom'>🍩 {lbl_pie}</div>", unsafe_allow_html=True)
         _show_risk_pie(dark, paper, text, lang)
 
     # ── LIGNE 2 : Évolution + Score par région ────────────────────────
     col_bot_l, col_bot_r = st.columns(2)
 
     with col_bot_l:
-        st.markdown(f"<div class='form-label-custom'>{'📈 Évolution Proxy PM2.5 - 30 derniers jours' if lang=='fr' else '📈 Proxy PM2.5 Evolution - Last 30 days'}</div>",
-                    unsafe_allow_html=True)
+        st.markdown(f"<div class='form-label-custom'>📈 {lbl_evol}</div>", unsafe_allow_html=True)
         _show_evolution(dark, paper, text, brd, lang)
 
     with col_bot_r:
-        st.markdown(f"<div class='form-label-custom'>{'📊 Score moyen par région' if lang=='fr' else '📊 Average score by region'}</div>",
-                    unsafe_allow_html=True)
+        st.markdown(f"<div class='form-label-custom'>📊 {lbl_bars}</div>", unsafe_allow_html=True)
         _show_region_bars(dark, paper, text, brd, lang)
 
     # ── Dernières prédictions ─────────────────────────────────────────
     st.markdown("---")
-    st.markdown(f"<div class='form-label-custom'>{'🕒 10 dernières prédictions Proxy PM2.5' if lang=='fr' else '🕒 Last 10 Proxy PM2.5 predictions'}</div>",
-                unsafe_allow_html=True)
+    st.markdown(f"<div class='form-label-custom'>🕒 {lbl_last}</div>", unsafe_allow_html=True)
+
     preds = get_all_predictions_aqi(limit=10)
     if preds:
         df = pd.DataFrame(preds)
-        cols_show = [c for c in ["city","region","date_pred","score","risk_level","username","created_at"]
+        cols_show = [c for c in ["city", "region", "date_pred", "score",
+                                  "risk_level", "username", "created_at"]
                      if c in df.columns]
         df = df[cols_show]
         col_map = {
-            "city": "Ville", "region": "Région", "date_pred": "Date",
-            "score": "Proxy PM2.5", "risk_level": "Niveau",
-            "username": "Utilisateur", "created_at": "Enregistré le"
+            "city":       "Ville",
+            "region":     "Region",
+            "date_pred":  "Date",
+            "score":      "Proxy PM2.5",
+            "risk_level": "Niveau",
+            "username":   "Utilisateur",
+            "created_at": "Enregistre le",
         }
         df = df.rename(columns={k: v for k, v in col_map.items() if k in df.columns})
 
         def style_r(val):
-            c = {"SAFE":      "background-color:#007A5E;color:white",
-                 "VIGILANCE": "background-color:#B8860B;color:white",
-                 "DANGER":    "background-color:#B91C1C;color:white"}
+            c = {
+                "SAFE":      "background-color:#007A5E;color:white",
+                "VIGILANCE": "background-color:#B8860B;color:white",
+                "DANGER":    "background-color:#B91C1C;color:white",
+            }
             return c.get(val, "")
 
         if "Niveau" in df.columns:
@@ -110,7 +127,8 @@ def show_dashboard():
         else:
             st.dataframe(df, use_container_width=True, hide_index=True)
     else:
-        st.info("Aucune prédiction." if lang=="fr" else "No predictions yet.")
+        no_data = "Aucune prediction." if lang == "fr" else "No predictions yet."
+        st.info(no_data)
 
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -131,22 +149,27 @@ def _show_aqi_map_plotly(dark, paper, text, sub, brd, lang):
     lats, lons, names, vals, hovers = [], [], [], [], []
 
     for city, d in scores.items():
-        s = d["score"]
-        lats.append(d["lat"]); lons.append(d["lon"])
-        names.append(city);    vals.append(s)
-        pm25 = round(s / 100 * 35, 2)
+        s     = d["score"]
+        pm25  = round(s / 100 * 35, 2)
         level = get_aqi_level_from_score(s)
         label = {"SAFE": "Safe", "VIGILANCE": "Vigilance", "DANGER": "Urgent"}.get(level, level)
-        hovers.append(f"<b>{city}</b><br>{d['region']}<br>Proxy PM2.5: {s:.1f}/100<br>PM2.5: ~{pm25} µg/m³<br>{label}")
+        lats.append(d["lat"])
+        lons.append(d["lon"])
+        names.append(city)
+        vals.append(s)
+        hovers.append(f"<b>{city}</b><br>{d['region']}<br>Proxy PM2.5: {s:.1f}/100<br>PM2.5: ~{pm25} µg/m3<br>{label}")
+
+    lbl_safe = f"Safe (0-{AQI_SCORE_SAFE_MAX})"
+    lbl_vig  = f"Vigilance ({AQI_SCORE_SAFE_MAX}-{AQI_SCORE_VIGILANCE_MAX})"
+    lbl_urg  = f"Urgent (>{AQI_SCORE_VIGILANCE_MAX})"
 
     fig = go.Figure()
     for lvl, lc, lb in [
-        ("SAFE",      "#007A5E", f"Safe (0–{AQI_SCORE_SAFE_MAX})"),
-        ("VIGILANCE", "#B8860B", f"Vigilance ({AQI_SCORE_SAFE_MAX}–{AQI_SCORE_VIGILANCE_MAX})"),
-        ("DANGER",    "#B91C1C", f"Urgent (>{AQI_SCORE_VIGILANCE_MAX})"),
+        ("SAFE",      "#007A5E", lbl_safe),
+        ("VIGILANCE", "#B8860B", lbl_vig),
+        ("DANGER",    "#B91C1C", lbl_urg),
     ]:
-        mask = [i for i, v in enumerate(vals)
-                if get_aqi_level_from_score(v) == lvl]
+        mask = [i for i, v in enumerate(vals) if get_aqi_level_from_score(v) == lvl]
         if mask:
             fig.add_trace(go.Scattergeo(
                 lat=[lats[i] for i in mask],
@@ -155,7 +178,7 @@ def _show_aqi_map_plotly(dark, paper, text, sub, brd, lang):
                 marker=dict(
                     size=[max(8, vals[i] / 5) for i in mask],
                     color=lc, opacity=0.85,
-                    line=dict(color="#F7F5F0" if not dark else "#1C1C1E", width=1)
+                    line=dict(color="#F7F5F0" if not dark else "#1C1C1E", width=1),
                 ),
                 hovertext=[hovers[i] for i in mask],
                 hoverinfo="text",
@@ -207,10 +230,10 @@ def _show_risk_pie(dark, paper, text, lang):
 
 
 def _show_region_bars(dark, paper, text, brd, lang):
-    regions = ["Adamaoua","Centre","Est","Extreme-Nord","Littoral","Nord","Nord-Ouest","Ouest"]
+    regions = ["Adamaoua", "Centre", "Est", "Extreme-Nord",
+               "Littoral", "Nord", "Nord-Ouest", "Ouest"]
     random.seed(77)
     scores = [random.uniform(20, 80) for _ in regions]
-    # Seuils officiels
     colors = [get_aqi_color(get_aqi_level_from_score(s)) for s in scores]
 
     fig = go.Figure(go.Bar(
@@ -233,6 +256,7 @@ def _show_evolution(dark, paper, text, brd, lang):
     days  = 30
     base  = datetime.now() - timedelta(days=days)
     dates = [base + timedelta(days=i) for i in range(days)]
+
     region_seeds = {"Centre": 38, "Nord": 62, "Littoral": 32, "Extreme-Nord": 68}
     kaki_colors  = {
         "Centre":       "#6B7355",
@@ -250,14 +274,16 @@ def _show_evolution(dark, paper, text, brd, lang):
             line=dict(color=kaki_colors[region], width=2),
         ))
 
-    # Seuils officiels sur le graphique
+    ann_safe = f"Safe ({AQI_SCORE_SAFE_MAX})"
+    ann_urg  = f"Urgent ({AQI_SCORE_VIGILANCE_MAX})"
+
     fig.add_hline(y=AQI_SCORE_SAFE_MAX,
                   line_dash="dot", line_color="#007A5E", opacity=0.5,
-                  annotation_text=f"Safe ({AQI_SCORE_SAFE_MAX})",
+                  annotation_text=ann_safe,
                   annotation_font_color="#007A5E")
     fig.add_hline(y=AQI_SCORE_VIGILANCE_MAX,
                   line_dash="dot", line_color="#CE1126", opacity=0.5,
-                  annotation_text=f"Urgent ({AQI_SCORE_VIGILANCE_MAX})",
+                  annotation_text=ann_urg,
                   annotation_font_color="#CE1126")
 
     fig.update_layout(
