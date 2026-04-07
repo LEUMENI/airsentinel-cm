@@ -257,7 +257,7 @@ def main():
     if page == "dashboard":
         from pages.dashboard import show_dashboard
         # Maintenant dark, paper, etc. existent bien !
-        show_dashboard(dark, paper, text, sub, brd, lang)
+        show_dashboard()
         
     elif page == "aqi":
         from pages.aqi_prediction import show_aqi_prediction
