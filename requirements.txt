@@ -10,5 +10,5 @@ folium==0.17.0
 streamlit-folium==0.22.0
 requests==2.31.0
 fpdf2==2.7.9
-Pillow==10.3.0
+Pillow==11.1.0
 openpyxl==3.1.2
