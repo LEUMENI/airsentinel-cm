@@ -286,7 +286,7 @@ def main():
         
     else:
         from pages.dashboard import show_dashboard
-        show_dashboard(dark, paper, text, sub, brd, lang)
+        show_dashboard()
 
 if __name__ == "__main__":
     main()

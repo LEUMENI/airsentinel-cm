@@ -48,11 +48,12 @@ def show_map():
     sub   = "#AEAEB2" if dark else "#636366"
     brd   = "#3A3A3C" if dark else "#D4CDB8"
 
+    title_map = "Carte Interactive - Cameroun" if lang == "fr" else "Interactive Map - Cameroon"
+    desc_map  = "Visualisation geospatiale des indices de qualite de l'air" if lang == "fr" else "Geospatial visualization of air quality indices"
     st.markdown(f"""
     <div class='section-header'>
-        <h3>{'🗺️ Carte Interactive -Cameroun' if lang=='fr' else '🗺️ Interactive Map -Cameroon'}</h3>
-        <p>{'Visualisation géospatiale des indices de qualité de l\'air et des vagues de chaleur' if lang=='fr'
-            else 'Geospatial visualization of air quality indices and heatwaves'}</p>
+        <h3>{title_map}</h3>
+        <p>{desc_map}</p>
     </div>
     """, unsafe_allow_html=True)
 
