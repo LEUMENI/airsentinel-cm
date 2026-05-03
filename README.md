@@ -1,129 +1,216 @@
 # 🌿 AirSentinel CM
 
-**Surveiller l'air. Protéger les populations.**  
-*Monitor the air. Protect the people.*
+> **Surveiller l'air. Protéger les populations.**
+> *Monitor the air. Protect the people.*
 
-> IndabaX Cameroon 2026 -Hackathon "L'IA au service de la résilience climatique et sanitaire"  
-> Équipe **InsightX D_Vas**
-
----
-
-## 📋 Description
-
-AirSentinel CM est une application web d'intelligence artificielle qui prédit :
-- **L'Indice de Qualité de l'Air (AQI/PM2.5)** via Gradient boosting (R²=0.85)
-- **Les vagues de chaleur** via Régression Logistique (ROC-AUC=0.96)
-
-pour **30 villes du Cameroun**, avec données météo en temps réel (Open-Meteo).
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://airsentinel-cm.streamlit.app)
+[![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](https://python.org)
+[![License MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![IndabaX Cameroon 2026](https://img.shields.io/badge/IndabaX-Cameroon%202026-orange.svg)]()
 
 ---
 
-## 🚀 Installation et lancement local
+## 📌 Présentation
 
-```bash
-# 1. Cloner le dépôt
-git clone https://github.com/votre-username/airsentinel-cm.git
-cd airsentinel-cm
+**AirSentinel CM** est une application web d'intelligence artificielle de surveillance de la qualité de l'air au Cameroun, développée par l'équipe **InsightX D_Vas** dans le cadre du **Hackathon IndabaX Cameroon 2026** sous le thème *"L'IA au service de la résilience climatique et sanitaire"*.
 
-# 2. Installer les dépendances
-pip install -r requirements.txt
+L'application prédit en temps réel :
+- Le **Proxy PM2.5** (particules fines estimées) via un modèle **XGBoost** (R² = 0.861)
+- Le **risque de vague de chaleur** à J+3 via une **Régression Logistique** (ROC-AUC = 0.963)
 
-# 3. Lancer l'application
-streamlit run app.py
-```
-
-L'app s'ouvre sur http://localhost:8501
-
-**Compte admin par défaut :**  
-Email: `admin@airsentinel.cm` | Mot de passe: `admin123`
+pour **30 villes du Cameroun** couvrant les **10 régions administratives**.
 
 ---
 
-## 📁 Structure du projet
+## 🖼️ Aperçu
+
+| Tableau de bord | Carte interactive | Prédiction PM2.5 |
+|---|---|---|
+| KPIs + carte + graphes | 4 couches : PM2.5, temp, précip, vagues | Formulaire + jauge + rapport PDF |
+
+---
+
+## 🏗️ Architecture
 
 ```
 airsentinel_cm/
-├── app.py                          # Point d'entrée principal
-├── requirements.txt
-├── models/
-│   ├── modele_pm25_insightx_final.pkl   # Gradient boosting AQI (R²=0.85)
-│   └── heatwave_model.pkl               # LogReg Heatwave (AUC=0.96)
-├── assets/
-│   └── profile_*.jpg/png           # Photos équipe
+├── app.py                        # Point d'entrée — Auth + Router + Sidebar
+├── requirements.txt              # Dépendances Python
+├── .python-version               # Python 3.11
+├── .streamlit/
+│   ├── config.toml               # Configuration Streamlit
+│   └── secrets.toml              # Variables sensibles (non versionné)
+├── pages/
+│   ├── dashboard.py              # Tableau de bord — KPIs + cartes
+│   ├── aqi_prediction.py         # Prédiction Proxy PM2.5
+│   ├── interactive_map.py        # Carte Folium interactive (4 couches)
+│   ├── alerts.py                 # Système d'alertes + WhatsApp simulation
+│   ├── admin.py                  # Administration (rôle admin)
+│   ├── profile.py                # Profil utilisateur
+│   └── about.py                  # À propos — équipe + modèles
 ├── utils/
-│   ├── database.py                 # SQLite (users, prédictions, alertes)
-│   ├── models.py                   # Prédiction ML
-│   ├── weather_api.py              # Open-Meteo API
-│   ├── pdf_report.py               # Génération rapports PDF
-│   ├── styles.py                   # CSS Dark/Light
-│   └── translations.py             # FR/EN + données villes
-└── pages/
-    ├── dashboard.py                # KPIs + cartes + graphes
-    ├── aqi_prediction.py           # Formulaire + prédiction AQI
-    ├── heatwave_prediction.py      # Formulaire + prédiction vague
-    ├── interactive_map.py          # Carte Folium interactive
-    ├── alerts.py                   # Gestion alertes + SMS sim.
-    ├── about.py                    # À propos + équipe
-    ├── profile.py                  # Profil utilisateur
-    └── admin.py                    # Administration (admin only)
+│   ├── database.py               # Couche SQLite — CRUD
+│   ├── models.py                 # Chargement + prédiction ML
+│   ├── thresholds.py             # Seuils officiels (Seuils.docx)
+│   ├── translations.py           # Bilingue FR/EN + 30 villes
+│   ├── weather_api.py            # Client Open-Meteo (temps réel)
+│   ├── email_service.py          # SMTP — alertes + rappels admin
+│   └── styles.py                 # CSS global (thèmes clair/sombre)
+├── models/
+│   ├── modele_pm25_insightx_final.pkl   # XGBoost Proxy PM2.5
+│   └── heatwave_model.pkl               # LogReg vagues de chaleur
+├── assets/                       # Photos équipe
+└── tests/
+    ├── test_models.py            # Tests modèles ML
+    ├── test_thresholds.py        # Tests seuils officiels
+    └── test_database.py          # Tests base de données
+```
+
+---
+
+## 🚀 Installation et lancement
+
+### Prérequis
+- Python 3.11
+- Git
+
+### Étapes
+
+```bash
+# 1. Cloner le dépôt
+git clone https://github.com/LEUMENI/airsentinel-cm.git
+cd airsentinel-cm
+
+# 2. Créer l'environnement virtuel
+python -m venv venv
+
+# 3. Activer l'environnement
+# Windows
+venv\Scripts\activate
+# Mac / Linux
+source venv/bin/activate
+
+# 4. Installer les dépendances
+pip install -r requirements.txt
+
+# 5. Lancer l'application
+streamlit run app.py
+```
+
+L'application s'ouvre sur **http://localhost:8501**
+
+**Compte démo admin :**
+```
+Email    : admin@airsentinel.cm
+Password : admin123
+```
+
+---
+
+## ⚙️ Configuration email (optionnel)
+
+Créez `.streamlit/secrets.toml` :
+
+```toml
+SMTP_HOST  = "smtp.gmail.com"
+SMTP_PORT  = "587"
+SMTP_USER  = "votre.email@gmail.com"
+SMTP_PASS  = "votre_app_password"
+FROM_EMAIL = "votre.email@gmail.com"
+FROM_NAME  = "AirSentinel CM"
 ```
 
 ---
 
 ## 🤖 Modèles ML
 
-### Modèle AQI -Gradient boosting
-- **Target** : PM2.5 proxy (µg/m³)
-- **R² validation** : 0.861 | **R² holdout** : 0.857
-- **MAE** : 1.62 µg/m³ | **RMSE** : 2.04 µg/m³
-- **Top features** : rain_sum, precipitation_sum, precipitation_hours, time_month, time_cos, et0_fao_evapotranspiration, temperature_2m_max, temperature_2m_mean
-- **Scaling** : score = min(100, PM2.5/35 × 100)
+### Proxy PM2.5 — XGBoost
 
-### Modèle Vague de chaleur -Régression Logistique
-- **Target** : vague de chaleur dans J+3 (fenêtre 3 jours consécutifs > 90e percentile local)
-- **ROC-AUC** : 0.9632 | **Recall classe 1** : 0.82
-- **Seuil décision** : 0.20 (optimisé pour maximiser le rappel -sécurité sanitaire)
-- **Définition** : ETCCDI -3 jours consécutifs avec Tmax > 90e percentile local
+| Métrique | Valeur |
+|---|---|
+| R² (validation) | 0.8511 |
+| R² (holdout) | 0.8535 |
+| MAE | 1.89 µg/m³ |
+| RMSE | 2.44 µg/m³ |
+| Dataset | 87 240 observations (2020–2025) |
+| Features | 18 variables météorologiques |
+
+**Seuils officiels PM2.5 :**
+| Niveau | PM2.5 | Score |
+|---|---|---|
+| 🟢 Safe | ≤ 12.7 µg/m³ | ≤ 36.3 |
+| 🟡 Vigilance | ≤ 22.2 µg/m³ | ≤ 63.4 |
+| 🔴 Urgent | > 22.2 µg/m³ | > 63.4 |
+
+### Vagues de chaleur — Régression Logistique
+
+| Métrique | Valeur |
+|---|---|
+| ROC-AUC | 0.963 |
+| Recall (classe 1) | 0.82 |
+| Seuil décision | 0.20 |
+| Définition | ETCCDI — 3 jours consécutifs > P90 local |
+
+---
+
+## 🗺️ Couverture géographique
+
+30 villes — 10 régions administratives du Cameroun :
+
+| Région | Villes couvertes |
+|---|---|
+| Adamaoua | Ngaoundéré, Meiganga, Tibati, Tignere |
+| Centre | Yaoundé, Mbalmayo, Akonolinga |
+| Est | Bertoua, Batouri, Yokadouma |
+| Extrême-Nord | Maroua, Kousseri, Yagoua, Mokolo |
+| Littoral | Douala, Nkongsamba |
+| Nord | Garoua, Guider, Poli, Touboro |
+| Nord-Ouest | Bamenda, Wum, Mbengwi |
+| Ouest | Bafoussam, Dschang, Foumban, Mbouda |
+| Sud | Ebolowa, Sangmelima |
+| Sud-Ouest | Dschang |
 
 ---
 
-## 🎨 Code couleur
+## 📊 Données
 
-| Score | Niveau | Couleur |
-|-------|--------|---------|
-| 0 -33 | ✅ SAFE | #007A5E (vert) |
-| 34 -66 | ⚠️ VIGILANCE | #FCD116 (jaune) |
-| 67 -100 | 🚨 DANGER | #CE1126 (rouge) |
+- **Source météo temps réel :** [Open-Meteo API](https://open-meteo.com/) (gratuit, sans clé API)
+- **Historique :** 2020–2025 — données quotidiennes
+- **Variables :** Température, précipitations, rayonnement, évapotranspiration, vent
 
 ---
 
-## 🌐 Déploiement Streamlit Cloud
+## 🛡️ Sécurité
 
-1. Pusher le code sur GitHub
-2. Aller sur [share.streamlit.io](https://share.streamlit.io)
-3. Connecter le dépôt GitHub
-4. Fichier principal : `app.py`
-5. Cliquer **Deploy**
+- Mots de passe hachés (SHA-256)
+- Variables sensibles dans `secrets.toml` (hors Git)
+- Validation des entrées utilisateur
+- Rôles : `user` / `admin`
+- Journaux d'activité complets
 
 ---
+
+## 👥 Équipe InsightX D_Vas
 
 ## 👥 Équipe InsightX D_Vas
 
 | Membre | Rôle |
 |--------|------|
 | **Lionel Leumeni** | Software Engineer -Architecture & Développement |
-| **Danielle** | Data Scientist -Modèle AQI (Gradient boosting) |
-| **Christy** | Data Scientist -Modèle Vague de chaleur |
-| **Belgrade** | Data Scientist -Analyse & Validation |
+| **Danielle FOTSI** | Data scientist - Modèle Qualité de l'air |
+| **Christy Alotse** | Responsable de l’orchestration du projet, de la supervision des équipes |
+| **Belgrade YONYA** | Data Scientist - modèle de vague de chaleur |
 
 ---
 
-## 📄 Données
+## 📄 Licence
 
-- **Dataset** : 87 240 observations • 30 villes • 10 régions • 2020–2025
-- **Source** : Open-Meteo Historical Archive
-- **Variables** : 22 variables météorologiques quotidiennes
+Ce projet est sous licence **MIT**. Voir [LICENSE](LICENSE).
 
 ---
 
-*AirSentinel CM © 2026 -InsightX D_Vas -IndabaX Cameroon*
+## 🏆 Hackathon IndabaX Cameroon 2026
+
+Thème : *"L'IA au service de la résilience climatique et sanitaire"*
+
+**AirSentinel CM** - Finaliste - Mai 2026
